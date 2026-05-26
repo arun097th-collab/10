@@ -1,20 +1,21 @@
 from flask import Flask
 from pyrogram import Client, filters
 import threading
+import asyncio
 
 app = Flask(__name__)
 
-# ======================
-# TELEGRAM DETAILS
-# ======================
+# =========================
+# TELEGRAM API
+# =========================
 
 API_ID = 21295053
 API_HASH = "297598578931dcc642c2519414079f8e"
 BOT_TOKEN = "8852863411:AAHJeN2b7oHdWedNjG1wTb0uNYSSgs3JK4A"
 
-# ======================
+# =========================
 # BOT
-# ======================
+# =========================
 
 bot = Client(
     "mybot",
@@ -23,17 +24,17 @@ bot = Client(
     bot_token=BOT_TOKEN
 )
 
-# ======================
-# HOME PAGE
-# ======================
+# =========================
+# HOME
+# =========================
 
 @app.route("/")
 def home():
     return "Bot Running Successfully"
 
-# ======================
+# =========================
 # START COMMAND
-# ======================
+# =========================
 
 @bot.on_message(filters.command("start"))
 async def start(client, message):
@@ -42,31 +43,40 @@ async def start(client, message):
         "🔥 Send Video Up To 2GB"
     )
 
-# ======================
-# VIDEO RECEIVE
-# ======================
+# =========================
+# VIDEO MESSAGE
+# =========================
 
 @bot.on_message(filters.video | filters.document)
 async def video(client, message):
 
     await message.reply_text(
-        "✅ Video Received Successfully"
+        "✅ Video Received"
     )
 
-# ======================
-# RUN BOT
-# ======================
+# =========================
+# BOT THREAD FIX
+# =========================
 
 def run_bot():
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
     bot.run()
+
+# =========================
+# START BOT THREAD
+# =========================
 
 threading.Thread(target=run_bot).start()
 
-# ======================
+# =========================
 # RUN FLASK
-# ======================
+# =========================
 
 if __name__ == "__main__":
+
     app.run(
         host="0.0.0.0",
         port=10000

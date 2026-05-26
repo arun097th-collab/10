@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Video Player</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+background:#0f172a;
+font-family:Arial;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+video{
+width:100%;
+max-width:900px;
+border-radius:15px;
+}
+
+.btn{
+display:block;
+width:260px;
+margin:15px auto;
+padding:15px;
+border-radius:12px;
+text-decoration:none;
+font-size:18px;
+font-weight:bold;
+}
+
+.mx{
+background:#00c853;
+color:white;
+}
+
+.vlc{
+background:#ff6d00;
+color:white;
+}
+
+.download{
+background:#2962ff;
+color:white;
+}
+</style>
+</head>
+<body>
+
+<h2>{{ file_name }}</h2>
+
+<video controls autoplay>
+<source src="{{ stream_url }}" type="video/mp4">
+</video>
+
+<a class="btn mx" href="intent:{{ stream_url }}#Intent;package=com.mxtech.videoplayer.ad;type=video/*;end">
+Open In MX Player
+</a>
+
+<a class="btn vlc" href="vlc://{{ stream_url }}">
+Open In VLC
+</a>
+
+<a class="btn download" href="{{ stream_url }}" download>
+Download Video
+</a>
+
+</body>
+</html>
